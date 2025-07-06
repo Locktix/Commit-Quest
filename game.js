@@ -30,12 +30,21 @@ class CommitQuest {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.remove('active');
         });
+        
+        // Charger une sauvegarde existante si elle existe
+        this.loadGame();
+        
         // Affiche uniquement l'écran de chargement puis le menu principal
         this.showScreen('loading-screen');
         setTimeout(() => {
             this.hideScreen('loading-screen');
             this.showScreen('main-menu');
         }, 3000);
+        
+        // Initialiser les événements
+        this.setupEventListeners();
+        this.initializeScenes();
+        this.showScreen('main-menu');
     }
 
     setupEventListeners() {
@@ -88,6 +97,11 @@ class CommitQuest {
         // Fermeture des écrans
         document.getElementById('close-inventory-btn').addEventListener('click', () => {
             this.hideScreen('inventory-screen');
+            this.showScreen('game-screen');
+        });
+
+        document.getElementById('close-journal-btn').addEventListener('click', () => {
+            this.hideScreen('journal-screen');
             this.showScreen('game-screen');
         });
 
@@ -200,33 +214,45 @@ class CommitQuest {
 
         const selectedClassData = classData[selectedClass.dataset.class];
         
-        this.gameState.player = {
-            name: playerName,
-            class: selectedClassData.name,
-            level: 1,
-            experience: 0,
-            maxExperience: 100,
-            health: 100,
-            maxHealth: 100,
-            stats: selectedClassData.stats,
-            abilities: selectedClassData.abilities,
+        // Réinitialiser complètement le jeu pour une nouvelle partie
+        this.gameState = {
+            player: {
+                name: playerName,
+                class: selectedClassData.name,
+                level: 1,
+                experience: 0,
+                maxExperience: 100,
+                health: 100,
+                maxHealth: 100,
+                stats: selectedClassData.stats,
+                abilities: selectedClassData.abilities,
+                inventory: [],
+                equipment: {
+                    weapon: null,
+                    armor: null,
+                    accessory: null
+                }
+            },
+            currentScene: null, // Réinitialiser la scène actuelle
             inventory: [],
-            equipment: {
-                weapon: null,
-                armor: null,
-                accessory: null
+            objectives: [
+                {
+                    id: 'first-commit',
+                    title: 'Premier Commit',
+                    description: 'Faites votre premier commit pour commencer l\'aventure',
+                    completed: false,
+                    type: 'story'
+                }
+            ],
+            commits: [],
+            achievements: [],
+            settings: {
+                musicVolume: 50,
+                sfxVolume: 70,
+                textSpeed: 3,
+                autoSave: true
             }
         };
-
-        this.gameState.objectives = [
-            {
-                id: 'first-commit',
-                title: 'Premier Commit',
-                description: 'Faites votre premier commit pour commencer l\'aventure',
-                completed: false,
-                type: 'story'
-            }
-        ];
 
         this.startGame();
     }
@@ -234,7 +260,15 @@ class CommitQuest {
     startGame() {
         this.showScreen('game-screen');
         this.updateUI();
-        this.loadScene('intro');
+        
+        // Si c'est une nouvelle partie ou si aucune scène n'est chargée, commencer par l'intro
+        if (!this.gameState.currentScene) {
+            this.loadScene('intro');
+        } else {
+            // Recharger la scène actuelle
+            this.loadScene(this.gameState.currentScene);
+        }
+        
         this.saveGame();
     }
 
@@ -927,6 +961,7 @@ class CommitQuest {
 let game;
 document.addEventListener('DOMContentLoaded', () => {
     game = new CommitQuest();
+    localStorage.clear();
 });
 
 // Fonctions globales pour les événements
@@ -934,32 +969,4 @@ function useItem(itemId) {
     game.useItem(itemId);
 }
 
-// Gestionnaire global pour forcer la fermeture du journal
-// Fonctionne même si le DOM ou les événements sont cassés
-// (utile pour les bugs de superposition ou d'attachement d'événements)
-document.addEventListener('click', function(e) {
-    if (e.target && (e.target.id === 'close-journal-btn' || e.target.closest('#close-journal-btn'))) {
-        document.getElementById('journal-screen').classList.remove('active');
-        document.getElementById('game-screen').classList.add('active');
-        console.log('Fermeture forcée du journal');
-    }
-});
-
-// Gestionnaire pour le bouton flottant de fermeture du journal (diagnostic)
-document.addEventListener('DOMContentLoaded', function() {
-    const floatBtn = document.getElementById('close-journal-float');
-    if (floatBtn) {
-        // Affiche le bouton flottant quand le journal est ouvert
-        const observer = new MutationObserver(() => {
-            const isJournalOpen = document.getElementById('journal-screen').classList.contains('active');
-            floatBtn.style.display = isJournalOpen ? 'block' : 'none';
-        });
-        observer.observe(document.getElementById('journal-screen'), { attributes: true, attributeFilter: ['class'] });
-        floatBtn.onclick = function() {
-            document.getElementById('journal-screen').classList.remove('active');
-            document.getElementById('game-screen').classList.add('active');
-            floatBtn.style.display = 'none';
-            console.log('Fermeture via bouton flottant');
-        };
-    }
-}); 
+ 
