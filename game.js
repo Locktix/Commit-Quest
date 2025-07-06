@@ -393,6 +393,363 @@ class CommitQuest {
                         action: () => this.loadScene('ask-colleague')
                     }
                 ]
+            },
+            'post-combat': {
+                text: "Après avoir vaincu le bug, vous vous sentez plus confiant dans vos compétences de développement. Le code est maintenant plus robuste et vous avez appris de nouvelles techniques.",
+                choices: [
+                    {
+                        text: "Continuer à explorer le projet",
+                        action: () => this.loadScene('explore-structure')
+                    },
+                    {
+                        text: "Chercher d'autres bugs à corriger",
+                        action: () => this.loadScene('find-bugs')
+                    },
+                    {
+                        text: "Demander une nouvelle tâche au lead",
+                        action: () => this.loadScene('meet-lead')
+                    }
+                ]
+            },
+            'create-ticket': {
+                text: "Vous créez un ticket détaillé dans le système de gestion de projet. Le ticket décrit précisément le problème de validation email et propose une solution.",
+                choices: [
+                    {
+                        text: "Attendre l'approbation du lead",
+                        action: () => this.loadScene('wait-approval')
+                    },
+                    {
+                        text: "Commencer à travailler sur le fix",
+                        action: () => this.loadScene('start-fix')
+                    },
+                    {
+                        text: "Discuter du ticket avec l'équipe",
+                        action: () => this.loadScene('team-discussion')
+                    }
+                ]
+            },
+            'ask-colleague': {
+                text: "Vous approchez un développeur senior, Alex, qui vous écoute attentivement. 'Ah oui, j'ai déjà rencontré ce problème. Laisse-moi te montrer une meilleure approche.'",
+                choices: [
+                    {
+                        text: "Suivre les conseils d'Alex",
+                        action: () => this.loadScene('follow-advice')
+                    },
+                    {
+                        text: "Demander plus d'explications",
+                        action: () => this.loadScene('ask-more-details')
+                    },
+                    {
+                        text: "Proposer une collaboration",
+                        action: () => this.loadScene('collaborate')
+                    }
+                ]
+            },
+            'defeat': {
+                text: "La défaite face au bug vous a appris une leçon importante. Parfois, il faut prendre du recul et analyser le problème différemment.",
+                choices: [
+                    {
+                        text: "Revoir votre approche",
+                        action: () => this.loadScene('revise-approach')
+                    },
+                    {
+                        text: "Demander de l'aide",
+                        action: () => this.loadScene('ask-colleague')
+                    },
+                    {
+                        text: "Prendre une pause et revenir plus tard",
+                        action: () => this.loadScene('take-break')
+                    }
+                ]
+            },
+            'wait-approval': {
+                text: "Le lead développeur examine votre ticket et l'approuve rapidement. 'Bonne analyse ! Tu peux commencer à travailler dessus.'",
+                choices: [
+                    {
+                        text: "Commencer le développement",
+                        action: () => this.loadScene('start-development')
+                    },
+                    {
+                        text: "Créer une branche pour le fix",
+                        action: () => this.loadScene('create-branch')
+                    },
+                    {
+                        text: "Planifier les tests",
+                        action: () => this.loadScene('plan-tests')
+                    }
+                ]
+            },
+            'start-fix': {
+                text: "Vous commencez à travailler sur la correction du bug. Le code semble plus complexe que prévu, mais vous êtes déterminé à le résoudre.",
+                choices: [
+                    {
+                        text: "Implémenter la solution",
+                        action: () => this.startCombat('email-validation-bug')
+                    },
+                    {
+                        text: "Écrire des tests d'abord",
+                        action: () => this.loadScene('write-tests')
+                    },
+                    {
+                        text: "Rechercher des solutions similaires",
+                        action: () => this.loadScene('research-solutions')
+                    }
+                ]
+            },
+            'team-discussion': {
+                text: "L'équipe discute de votre ticket lors de la réunion quotidienne. Plusieurs développeurs partagent leurs expériences et suggestions.",
+                choices: [
+                    {
+                        text: "Intégrer les suggestions de l'équipe",
+                        action: () => this.loadScene('integrate-suggestions')
+                    },
+                    {
+                        text: "Poser des questions spécifiques",
+                        action: () => this.loadScene('ask-specific-questions')
+                    },
+                    {
+                        text: "Proposer une session de pair programming",
+                        action: () => this.loadScene('pair-programming')
+                    }
+                ]
+            },
+            'follow-advice': {
+                text: "En suivant les conseils d'Alex, vous découvrez une approche plus élégante pour la validation email. Le code devient plus maintenable et robuste.",
+                choices: [
+                    {
+                        text: "Implémenter la solution améliorée",
+                        action: () => this.startCombat('email-validation-bug')
+                    },
+                    {
+                        text: "Documenter la nouvelle approche",
+                        action: () => this.loadScene('document-approach')
+                    },
+                    {
+                        text: "Partager avec l'équipe",
+                        action: () => this.loadScene('share-with-team')
+                    }
+                ]
+            },
+            'ask-more-details': {
+                text: "Alex prend le temps de vous expliquer en détail les bonnes pratiques de validation et les pièges à éviter. Vous apprenez beaucoup !",
+                choices: [
+                    {
+                        text: "Mettre en pratique ces connaissances",
+                        action: () => this.loadScene('apply-knowledge')
+                    },
+                    {
+                        text: "Prendre des notes pour plus tard",
+                        action: () => this.loadScene('take-notes')
+                    },
+                    {
+                        text: "Demander des ressources supplémentaires",
+                        action: () => this.loadScene('request-resources')
+                    }
+                ]
+            },
+            'collaborate': {
+                text: "Alex accepte de collaborer avec vous sur ce bug. C'est une excellente opportunité d'apprendre et de contribuer ensemble.",
+                choices: [
+                    {
+                        text: "Commencer la session de collaboration",
+                        action: () => this.loadScene('start-collaboration')
+                    },
+                    {
+                        text: "Planifier la répartition des tâches",
+                        action: () => this.loadScene('plan-tasks')
+                    },
+                    {
+                        text: "Configurer l'environnement de travail",
+                        action: () => this.loadScene('setup-environment')
+                    }
+                ]
+            },
+            'start-collaboration': {
+                text: "Vous et Alex commencez une session de pair programming. C'est incroyable de voir comment un développeur senior aborde les problèmes !",
+                choices: [
+                    {
+                        text: "Implémenter la solution ensemble",
+                        action: () => this.startCombat('email-validation-bug')
+                    },
+                    {
+                        text: "Apprendre de nouvelles techniques",
+                        action: () => this.loadScene('learn-techniques')
+                    },
+                    {
+                        text: "Partager vos idées",
+                        action: () => this.loadScene('share-ideas')
+                    }
+                ]
+            },
+            'plan-tasks': {
+                text: "Vous planifiez ensemble la répartition des tâches. Alex s'occupera de la logique complexe tandis que vous gérerez les tests.",
+                choices: [
+                    {
+                        text: "Commencer par votre partie",
+                        action: () => this.loadScene('start-your-part')
+                    },
+                    {
+                        text: "Attendre qu'Alex finisse sa partie",
+                        action: () => this.loadScene('wait-for-alex')
+                    },
+                    {
+                        text: "Travailler en parallèle",
+                        action: () => this.loadScene('parallel-work')
+                    }
+                ]
+            },
+            'setup-environment': {
+                text: "Vous configurez ensemble l'environnement de développement partagé. Les outils de collaboration sont maintenant en place.",
+                choices: [
+                    {
+                        text: "Commencer le développement",
+                        action: () => this.loadScene('start-development')
+                    },
+                    {
+                        text: "Tester l'environnement",
+                        action: () => this.loadScene('test-environment')
+                    },
+                    {
+                        text: "Documenter la configuration",
+                        action: () => this.loadScene('document-config')
+                    }
+                ]
+            },
+            'explore-structure': {
+                text: "Vous explorez la structure du projet et découvrez une architecture bien organisée. Chaque dossier a sa responsabilité claire.",
+                choices: [
+                    {
+                        text: "Examiner les composants principaux",
+                        action: () => this.loadScene('examine-components')
+                    },
+                    {
+                        text: "Regarder les tests existants",
+                        action: () => this.loadScene('look-tests')
+                    },
+                    {
+                        text: "Comprendre l'architecture",
+                        action: () => this.loadScene('understand-architecture')
+                    }
+                ]
+            },
+            'first-commit-success': {
+                text: "Félicitations ! Votre premier commit a été créé avec succès. Vous commencez à vous sentir comme un vrai développeur !",
+                choices: [
+                    {
+                        text: "Continuer le développement",
+                        action: () => this.loadScene('continue-development')
+                    },
+                    {
+                        text: "Explorer d'autres fonctionnalités",
+                        action: () => this.loadScene('explore-features')
+                    },
+                    {
+                        text: "Demander une nouvelle tâche",
+                        action: () => this.loadScene('meet-lead')
+                    }
+                ]
+            },
+            'continue-development': {
+                text: "Vous continuez à développer de nouvelles fonctionnalités. Chaque ligne de code vous rapproche de la maîtrise du développement.",
+                choices: [
+                    {
+                        text: "Travailler sur une nouvelle feature",
+                        action: () => this.loadScene('new-feature')
+                    },
+                    {
+                        text: "Refactoriser du code existant",
+                        action: () => this.loadScene('refactor-code')
+                    },
+                    {
+                        text: "Optimiser les performances",
+                        action: () => this.loadScene('optimize-performance')
+                    }
+                ]
+            },
+            'new-feature': {
+                text: "Vous commencez à travailler sur une nouvelle fonctionnalité passionnante. L'équipe est enthousiaste à l'idée de voir votre contribution.",
+                choices: [
+                    {
+                        text: "Planifier l'architecture",
+                        action: () => this.loadScene('plan-architecture')
+                    },
+                    {
+                        text: "Créer les tests d'abord",
+                        action: () => this.loadScene('create-tests-first')
+                    },
+                    {
+                        text: "Implémenter directement",
+                        action: () => this.loadScene('implement-directly')
+                    }
+                ]
+            },
+            'plan-architecture': {
+                text: "Vous planifiez l'architecture de la nouvelle fonctionnalité. Une bonne planification maintenant vous fera gagner beaucoup de temps plus tard.",
+                choices: [
+                    {
+                        text: "Créer un diagramme",
+                        action: () => this.loadScene('create-diagram')
+                    },
+                    {
+                        text: "Discuter avec l'équipe",
+                        action: () => this.loadScene('discuss-with-team')
+                    },
+                    {
+                        text: "Commencer l'implémentation",
+                        action: () => this.loadScene('start-implementation')
+                    }
+                ]
+            },
+            'create-diagram': {
+                text: "Vous créez un diagramme clair de l'architecture. Cela aide toute l'équipe à comprendre votre vision.",
+                choices: [
+                    {
+                        text: "Présenter à l'équipe",
+                        action: () => this.loadScene('present-to-team')
+                    },
+                    {
+                        text: "Affiner le design",
+                        action: () => this.loadScene('refine-design')
+                    },
+                    {
+                        text: "Commencer le développement",
+                        action: () => this.loadScene('start-development')
+                    }
+                ]
+            },
+            'present-to-team': {
+                text: "Votre présentation est un succès ! L'équipe apprécie votre approche méthodique et vous donne des suggestions constructives.",
+                choices: [
+                    {
+                        text: "Intégrer les feedbacks",
+                        action: () => this.loadScene('integrate-feedback')
+                    },
+                    {
+                        text: "Commencer l'implémentation",
+                        action: () => this.loadScene('start-implementation')
+                    },
+                    {
+                        text: "Affiner davantage",
+                        action: () => this.loadScene('refine-further')
+                    }
+                ]
+            },
+            'start-implementation': {
+                text: "Vous commencez l'implémentation de la fonctionnalité. Le code coule naturellement grâce à votre bonne planification.",
+                choices: [
+                    {
+                        text: "Continuer le développement",
+                        action: () => this.loadScene('continue-development')
+                    },
+                    {
+                        text: "Faire un commit intermédiaire",
+                        action: () => this.makeCommit('feat: Implémentation en cours de la nouvelle fonctionnalité', 'story')
+                    },
+                    {
+                        text: "Tester ce qui est fait",
+                        action: () => this.loadScene('test-progress')
+                    }
+                ]
             }
         };
     }
