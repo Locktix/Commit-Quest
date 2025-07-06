@@ -270,10 +270,10 @@
 
     <!-- Écran de journal -->
     <div id="journal-screen" class="screen">
-        <div class="journal-header">
-            <h2>Journal de Progression</h2>
-            <button id="close-journal-btn" class="close-btn">
-                <i class="fas fa-times"></i>
+        <div class="journal-header" style="display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 10;">
+            <h2 style="margin: 0;">Journal de Progression</h2>
+            <button id="close-journal-btn" class="close-btn" aria-label="Fermer le journal" title="Fermer" style="margin-left: auto; display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; min-width: 40px; min-height: 40px;">
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
         <div class="journal-content">
@@ -358,6 +358,9 @@
     <div id="notification-container" class="notification-container">
         <!-- Les notifications seront affichées ici -->
     </div>
+
+    <!-- Bouton flottant de fermeture du journal (diagnostic) -->
+    <button id="close-journal-float" style="position:fixed;top:20px;right:20px;z-index:99999;background:red;color:white;font-size:2rem;display:none;">✖</button>
 
     <script src="game.js"></script>
 </body>

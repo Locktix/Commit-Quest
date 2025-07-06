@@ -1065,4 +1065,27 @@ h1, h2, h3, h4, h5, h6 {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--success-color);
+}
+
+/* Correction accessibilité et z-index du bouton de fermeture du journal */
+#close-journal-btn {
+    position: relative;
+    z-index: 100;
+    pointer-events: auto;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.journal-header {
+    position: relative;
+    z-index: 10;
+}
+
+/* Pour s'assurer qu'aucun overlay ne recouvre le header du journal */
+#journal-screen {
+    z-index: 50;
 } 

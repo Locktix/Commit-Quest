@@ -26,12 +26,12 @@ class CommitQuest {
     }
 
     init() {
-        this.loadGame();
-        this.setupEventListeners();
-        this.initializeScenes();
+        // Désactive tous les écrans au démarrage
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        // Affiche uniquement l'écran de chargement puis le menu principal
         this.showScreen('loading-screen');
-        
-        // Simulation du chargement
         setTimeout(() => {
             this.hideScreen('loading-screen');
             this.showScreen('main-menu');
@@ -88,11 +88,6 @@ class CommitQuest {
         // Fermeture des écrans
         document.getElementById('close-inventory-btn').addEventListener('click', () => {
             this.hideScreen('inventory-screen');
-            this.showScreen('game-screen');
-        });
-
-        document.getElementById('close-journal-btn').addEventListener('click', () => {
-            this.hideScreen('journal-screen');
             this.showScreen('game-screen');
         });
 
@@ -937,4 +932,34 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fonctions globales pour les événements
 function useItem(itemId) {
     game.useItem(itemId);
-} 
+}
+
+// Gestionnaire global pour forcer la fermeture du journal
+// Fonctionne même si le DOM ou les événements sont cassés
+// (utile pour les bugs de superposition ou d'attachement d'événements)
+document.addEventListener('click', function(e) {
+    if (e.target && (e.target.id === 'close-journal-btn' || e.target.closest('#close-journal-btn'))) {
+        document.getElementById('journal-screen').classList.remove('active');
+        document.getElementById('game-screen').classList.add('active');
+        console.log('Fermeture forcée du journal');
+    }
+});
+
+// Gestionnaire pour le bouton flottant de fermeture du journal (diagnostic)
+document.addEventListener('DOMContentLoaded', function() {
+    const floatBtn = document.getElementById('close-journal-float');
+    if (floatBtn) {
+        // Affiche le bouton flottant quand le journal est ouvert
+        const observer = new MutationObserver(() => {
+            const isJournalOpen = document.getElementById('journal-screen').classList.contains('active');
+            floatBtn.style.display = isJournalOpen ? 'block' : 'none';
+        });
+        observer.observe(document.getElementById('journal-screen'), { attributes: true, attributeFilter: ['class'] });
+        floatBtn.onclick = function() {
+            document.getElementById('journal-screen').classList.remove('active');
+            document.getElementById('game-screen').classList.add('active');
+            floatBtn.style.display = 'none';
+            console.log('Fermeture via bouton flottant');
+        };
+    }
+}); 
