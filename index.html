@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commit Quest - RPG Narratif</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Écran de chargement -->
+    <div id="loading-screen" class="screen active">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <i class="fas fa-code-branch"></i>
+                <h1>Commit Quest</h1>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Initialisation du repository...</p>
+        </div>
+    </div>
+
+    <!-- Écran d'accueil -->
+    <div id="main-menu" class="screen">
+        <div class="menu-container">
+            <div class="menu-header">
+                <i class="fas fa-code-branch"></i>
+                <h1>Commit Quest</h1>
+                <p class="subtitle">Chaque commit avance l'histoire</p>
+            </div>
+            <div class="menu-buttons">
+                <button id="new-game-btn" class="menu-btn primary">
+                    <i class="fas fa-play"></i>
+                    Nouvelle Partie
+                </button>
+                <button id="continue-btn" class="menu-btn secondary">
+                    <i class="fas fa-download"></i>
+                    Continuer
+                </button>
+                <button id="settings-btn" class="menu-btn secondary">
+                    <i class="fas fa-cog"></i>
+                    Paramètres
+                </button>
+            </div>
+            <div class="menu-footer">
+                <p>Poussez votre progression vers la branche principale</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de création de personnage -->
+    <div id="character-creation" class="screen">
+        <div class="character-container">
+            <h2>Création du Développeur</h2>
+            <div class="character-classes">
+                <div class="class-card" data-class="frontend">
+                    <div class="class-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Développeur Frontend</h3>
+                    <p>Spécialiste de l'interface utilisateur</p>
+                    <div class="class-stats">
+                        <div class="stat">
+                            <span class="stat-label">Créativité</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Logique</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Résistance</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card" data-class="backend">
+                    <div class="class-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Développeur Backend</h3>
+                    <p>Maître de la logique serveur</p>
+                    <div class="class-stats">
+                        <div class="stat">
+                            <span class="stat-label">Créativité</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Logique</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Résistance</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card" data-class="fullstack">
+                    <div class="class-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Développeur Full-Stack</h3>
+                    <p>Polyvalent et équilibré</p>
+                    <div class="class-stats">
+                        <div class="stat">
+                            <span class="stat-label">Créativité</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Logique</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Résistance</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="character-name">
+                <label for="player-name">Nom du développeur:</label>
+                <input type="text" id="player-name" placeholder="Entrez votre nom" maxlength="20">
+            </div>
+            <button id="start-game-btn" class="menu-btn primary" disabled>
+                <i class="fas fa-rocket"></i>
+                Commencer l'Aventure
+            </button>
+        </div>
+    </div>
+
+    <!-- Écran principal du jeu -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="player-info">
+                <div class="player-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="player-details">
+                    <h3 id="player-name-display">Nom du Joueur</h3>
+                    <p id="player-class-display">Classe</p>
+                </div>
+            </div>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <span id="player-hp">100/100</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <span id="player-level">1</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-code-branch"></i>
+                    <span id="commit-count">0</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button id="inventory-btn" class="control-btn">
+                    <i class="fas fa-briefcase"></i>
+                </button>
+                <button id="journal-btn" class="control-btn">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button id="menu-btn" class="control-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="story-container">
+                <div class="story-text" id="story-text">
+                    Bienvenue dans Commit Quest ! Vous êtes un développeur junior prêt à affronter les défis du monde du développement.
+                </div>
+                <div class="story-choices" id="story-choices">
+                    <!-- Les choix seront générés dynamiquement -->
+                </div>
+            </div>
+        </div>
+
+        <div class="game-footer">
+            <div class="commit-history">
+                <h4>Historique des Commits</h4>
+                <div class="commit-list" id="commit-list">
+                    <!-- Les commits seront affichés ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de combat -->
+    <div id="combat-screen" class="screen">
+        <div class="combat-header">
+            <h2>Combat en Cours</h2>
+            <div class="combat-participants">
+                <div class="participant player">
+                    <div class="participant-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="participant-info">
+                        <h4 id="combat-player-name">Vous</h4>
+                        <div class="health-bar">
+                            <div class="health-fill" id="combat-player-hp"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="participant enemy">
+                    <div class="participant-avatar">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="participant-info">
+                        <h4 id="combat-enemy-name">Bug</h4>
+                        <div class="health-bar">
+                            <div class="health-fill" id="combat-enemy-hp"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="combat-content">
+            <div class="combat-log" id="combat-log">
+                <!-- Les messages de combat seront affichés ici -->
+            </div>
+            <div class="combat-actions" id="combat-actions">
+                <!-- Les actions de combat seront générées dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran d'inventaire -->
+    <div id="inventory-screen" class="screen">
+        <div class="inventory-header">
+            <h2>Inventaire</h2>
+            <button id="close-inventory-btn" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="inventory-content">
+            <div class="inventory-grid" id="inventory-grid">
+                <!-- Les objets d'inventaire seront affichés ici -->
+            </div>
+            <div class="inventory-info" id="inventory-info">
+                <h3>Informations</h3>
+                <p>Sélectionnez un objet pour voir ses détails</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de journal -->
+    <div id="journal-screen" class="screen">
+        <div class="journal-header">
+            <h2>Journal de Progression</h2>
+            <button id="close-journal-btn" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="journal-content">
+            <div class="journal-tabs">
+                <button class="tab-btn active" data-tab="objectives">Objectifs</button>
+                <button class="tab-btn" data-tab="commits">Commits</button>
+                <button class="tab-btn" data-tab="achievements">Succès</button>
+            </div>
+            <div class="journal-panel active" id="objectives-panel">
+                <h3>Objectifs Actuels</h3>
+                <div class="objectives-list" id="objectives-list">
+                    <!-- Les objectifs seront affichés ici -->
+                </div>
+            </div>
+            <div class="journal-panel" id="commits-panel">
+                <h3>Historique des Commits</h3>
+                <div class="commits-timeline" id="commits-timeline">
+                    <!-- L'historique des commits sera affiché ici -->
+                </div>
+            </div>
+            <div class="journal-panel" id="achievements-panel">
+                <h3>Succès Débloqués</h3>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Les succès seront affichés ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de paramètres -->
+    <div id="settings-screen" class="screen">
+        <div class="settings-container">
+            <h2>Paramètres</h2>
+            <div class="settings-section">
+                <h3>Audio</h3>
+                <div class="setting-item">
+                    <label for="music-volume">Volume de la musique</label>
+                    <input type="range" id="music-volume" min="0" max="100" value="50">
+                </div>
+                <div class="setting-item">
+                    <label for="sfx-volume">Volume des effets sonores</label>
+                    <input type="range" id="sfx-volume" min="0" max="100" value="70">
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Jeu</h3>
+                <div class="setting-item">
+                    <label for="text-speed">Vitesse du texte</label>
+                    <input type="range" id="text-speed" min="1" max="5" value="3">
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="auto-save" checked>
+                        Sauvegarde automatique
+                    </label>
+                </div>
+            </div>
+            <div class="settings-buttons">
+                <button id="save-settings-btn" class="menu-btn primary">Sauvegarder</button>
+                <button id="reset-settings-btn" class="menu-btn secondary">Réinitialiser</button>
+                <button id="back-to-menu-btn" class="menu-btn secondary">Retour au Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Titre</h3>
+                <button class="close-btn" id="close-modal-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Contenu de la modale -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification-container" class="notification-container">
+        <!-- Les notifications seront affichées ici -->
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 
