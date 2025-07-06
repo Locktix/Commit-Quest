@@ -42,20 +42,19 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Écrans */
 .screen {
+    display: none !important;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: none;
     flex-direction: column;
     background: linear-gradient(135deg, var(--background-dark) 0%, var(--primary-color) 100%);
     z-index: 1;
 }
 
 .screen.active {
-    display: flex;
-    animation: fadeIn 0.5s ease-in-out;
+    display: flex !important;
 }
 
 @keyframes fadeIn {
@@ -217,7 +216,7 @@ h1, h2, h3, h4, h5, h6 {
 .menu-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none !important;
+    transform: none 
 }
 
 .menu-footer {
